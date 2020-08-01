@@ -1,0 +1,8 @@
+Package: hellorust
+Title: Convergence Acceleration
+Version: 0.1
+Authors@R: person("Paul", "Metcalfe", , "paul.metcalfe@gmail.com", role = c("aut", "cre"))
+Description: Use the RRE method for convergence acceleration on vector sequences.
+Depends: R (>= 3.4)
+License: GPL-3
+LazyData: true

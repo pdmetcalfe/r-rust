@@ -1,0 +1,9 @@
+all:
+	cargo build --release --manifest-path=hellorust/Cargo.toml
+	cp hellorust/target/release/libhellorust.so hellorust.so
+
+clean:
+	rm hellorust.so
+	rm -Rf hellorust/target
+
+.PHONY: all clean

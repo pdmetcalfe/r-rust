@@ -10,4 +10,4 @@ crate-type=['dylib']
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-r-sys={path = "/home/pdm/projects/r-sys"}
+r-sys={git="https://github.com/pdmetcalfe/r-sys"}

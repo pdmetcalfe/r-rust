@@ -1,30 +1,19 @@
-use std::ptr;
-use std::mem::transmute;
+use ::byte_strings::c_str;
 
-use r_sys;
+use rustistics::types::{RArg, RRes, RDll};
+use rustistics::binding::{RBinding, register, R1};
 
-extern "C" fn shift(x: r_sys::SEXP) -> r_sys::SEXP {
-    x
+extern "C" fn shift(x: RArg) -> RRes {
+    RRes::from(x)
 }
 
 
 #[no_mangle]
 #[allow(non_snake_case)]
-pub extern "C" fn R_init_hellorust(dll: *mut r_sys::DllInfo) {
+pub extern "C" fn R_init_hellorust(dll: RDll) {
 
-    let linkage: &[r_sys::R_CallMethodDef] = &[
-	r_sys::R_CallMethodDef {name: b"iota_rust\0".as_ptr() as *const i8,
-				fun: unsafe {transmute(shift as usize)},
-				numArgs: 1},
-	r_sys::R_CallMethodDef {name: ptr::null(),
-				fun: None,
-				numArgs: 0},
-    ];
-
-    unsafe {
-	r_sys::R_registerRoutines(dll, ptr::null(), linkage.as_ptr(),
-				  ptr::null(), ptr::null());
-	r_sys::R_useDynamicSymbols(dll, r_sys::Rboolean::TRUE);
-	r_sys::R_forceSymbols(dll, r_sys::Rboolean::FALSE);
-    }
+    let linkage = &[RBinding::new(shift as R1, c_str!("iota_rust")),
+		    RBinding::null()];
+    
+    register(dll, linkage);
 }
